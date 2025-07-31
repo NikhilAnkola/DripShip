@@ -1,64 +1,54 @@
+// Login.js
 import React from 'react';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      enteredUsername: '',
-      enteredPassword: '',
-      message: ''
+      inputUsername: '',
+      inputPassword: '',
+      error: ''
     };
   }
 
-  handleUsernameChange = (event) => {
-    this.setState({ enteredUsername: event.target.value });
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
   };
 
-  handlePasswordChange = (event) => {
-    this.setState({ enteredPassword: event.target.value });
-  };
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { inputUsername, inputPassword } = this.state;
+    const { username, password, onLoginSuccess } = this.props;
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-
-    const { username, password } = this.props;
-    const { enteredUsername, enteredPassword } = this.state;
-
-    if (enteredUsername === username && enteredPassword === password) {
-      this.setState({ message: 'Login successful!' });
+    if (inputUsername === username && inputPassword === password) {
+      onLoginSuccess();
     } else {
-      this.setState({ message: 'Invalid credentials. Try again.' });
+      this.setState({ error: 'Invalid username or password' });
     }
   };
 
   render() {
     return (
-      <div style={{ textAlign: 'center', marginTop: '100px' }}>
-        <h2>Login Page</h2>
+      <div className="login-container">
+        <h2>Login</h2>
         <form onSubmit={this.handleSubmit}>
-          <div>
-            <input
-              type="text"
-              placeholder="Username"
-              value={this.state.enteredUsername}
-              onChange={this.handleUsernameChange}
-              required
-            />
-          </div>
-          <div style={{ marginTop: '10px' }}>
-            <input
-              type="password"
-              placeholder="Password"
-              value={this.state.enteredPassword}
-              onChange={this.handlePasswordChange}
-              required
-            />
-          </div>
-          <div style={{ marginTop: '15px' }}>
-            <button type="submit">Login</button>
-          </div>
+          <input
+            type="text"
+            name="inputUsername"
+            placeholder="Username"
+            value={this.state.inputUsername}
+            onChange={this.handleChange}
+          />
+          <input
+            type="password"
+            name="inputPassword"
+            placeholder="Password"
+            value={this.state.inputPassword}
+            onChange={this.handleChange}
+          />
+          <button type="submit">Login</button>
         </form>
-        <p style={{ marginTop: '20px', color: 'green' }}>{this.state.message}</p>
+        {this.state.error && <p className="error">{this.state.error}</p>}
       </div>
     );
   }
