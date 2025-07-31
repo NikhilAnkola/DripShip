@@ -29,12 +29,12 @@ class Login extends React.Component {
     enteredUsername === username &&
     enteredPassword === password
   ) {
-    alert("✅ Welcome!");
+    alert(`✅ Welcome ${enteredUsername}!`);
     onLoginSuccess();
-    this.setState({ errorMessage: '' }); // clear any previous error
+    this.setState({ errorMessage: '' });
   } else {
-    alert("❌ Invalid username or password"); // popup for incorrect login
-    this.setState({ errorMessage: '' }); // optional: remove red text if using alert
+    alert("❌ Invalid username or password");
+    this.setState({ errorMessage: '❌ Invalid username or password' });
   }
 };
 
