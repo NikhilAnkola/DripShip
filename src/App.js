@@ -44,7 +44,7 @@ function App() {
   );
 }
 
-function Navbar({ onLoginClick, isLoggedIn }) {
+function Navbar({ onLoginClick }) {
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -64,12 +64,8 @@ function Navbar({ onLoginClick, isLoggedIn }) {
           <li onClick={() => scrollToSection('shop')}>Shop</li>
           <li onClick={() => scrollToSection('about')}>About</li>
           <li onClick={() => scrollToSection('contact')}>Contact</li>
+          <li onClick={onLoginClick}>Login</li> {/* Now styled like others */}
         </ul>
-        {!isLoggedIn && (
-          <button className="login-button" onClick={onLoginClick}>
-            Login
-          </button>
-        )}
       </div>
     </nav>
   );
