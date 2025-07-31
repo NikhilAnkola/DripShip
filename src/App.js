@@ -1,37 +1,50 @@
+// App.js
 import React, { useState } from 'react';
 import './App.css';
+import './Login.css';
 import logo from './logo.jpeg';
 import Login from './Login';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLoginForm, setShowLoginForm] = useState(false);
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
+    setShowLoginForm(false);
+  };
+
+  const handleLoginClick = () => {
+    setShowLoginForm(true);
   };
 
   return (
     <div className="App">
+      <Navbar onLoginClick={handleLoginClick} isLoggedIn={isLoggedIn} />
       {isLoggedIn ? (
         <>
-          <Navbar />
           <Home />
           <Shop />
           <About />
           <Contact />
         </>
-      ) : (
+      ) : showLoginForm ? (
         <Login
           username="admin"
           password="1234"
           onLoginSuccess={handleLoginSuccess}
         />
+      ) : (
+        <div className="landing-message">
+          <h2>Welcome to DripShip!</h2>
+          <p>Click Login to continue.</p>
+        </div>
       )}
     </div>
   );
 }
 
-function Navbar() {
+function Navbar({ onLoginClick, isLoggedIn }) {
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -52,6 +65,11 @@ function Navbar() {
           <li onClick={() => scrollToSection('about')}>About</li>
           <li onClick={() => scrollToSection('contact')}>Contact</li>
         </ul>
+        {!isLoggedIn && (
+          <button className="login-button" onClick={onLoginClick}>
+            Login
+          </button>
+        )}
       </div>
     </nav>
   );
