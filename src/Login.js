@@ -1,35 +1,29 @@
-import React from "react";
+// Login.js
+import React from 'react';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      enteredUsername: "",
-      enteredPassword: "",
-      error: "",
+      inputUsername: '',
+      inputPassword: '',
+      error: ''
     };
   }
 
-  handleUsernameChange = (e) => {
-    this.setState({ enteredUsername: e.target.value });
-  };
-
-  handlePasswordChange = (e) => {
-    this.setState({ enteredPassword: e.target.value });
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
+    const { inputUsername, inputPassword } = this.state;
     const { username, password, onLoginSuccess } = this.props;
-    const { enteredUsername, enteredPassword } = this.state;
 
-    if (
-      enteredUsername === username &&
-      enteredPassword === password
-    ) {
+    if (inputUsername === username && inputPassword === password) {
       onLoginSuccess();
     } else {
-      this.setState({ error: "Invalid credentials. Try again." });
+      this.setState({ error: 'Invalid username or password' });
     }
   };
 
@@ -40,23 +34,21 @@ class Login extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
+            name="inputUsername"
             placeholder="Username"
-            value={this.state.enteredUsername}
-            onChange={this.handleUsernameChange}
-            required
+            value={this.state.inputUsername}
+            onChange={this.handleChange}
           />
           <input
             type="password"
+            name="inputPassword"
             placeholder="Password"
-            value={this.state.enteredPassword}
-            onChange={this.handlePasswordChange}
-            required
+            value={this.state.inputPassword}
+            onChange={this.handleChange}
           />
           <button type="submit">Login</button>
         </form>
-        {this.state.error && (
-          <p className="error">{this.state.error}</p>
-        )}
+        {this.state.error && <p className="error">{this.state.error}</p>}
       </div>
     );
   }
