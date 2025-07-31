@@ -40,8 +40,8 @@ function App() {
         </>
       ) : showLoginForm ? (
         <Login
-          username="admin"
-          password="1234"
+          username="Nikhil"
+          password="3103"
           onLoginSuccess={handleLoginSuccess}
         />
       ) : (
