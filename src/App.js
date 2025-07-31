@@ -1,115 +1,81 @@
-// App.js
-import React, { useState } from 'react';
-import './App.css';
-import './Login.css';
-import logo from './logo.jpeg';
-import Login from './Login';
+import React, { useState } from "react";
+import "./App.css";
+import Login from "./Login";
+import "./Login.css";
+import logo from "./logo.png"; // Replace this with your actual image path
 
 function App() {
+  const [isLoginPage, setIsLoginPage] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showLoginForm, setShowLoginForm] = useState(false);
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
-    setShowLoginForm(false);
+    setIsLoginPage(false);
   };
 
-  const handleLoginClick = () => {
-    setShowLoginForm(true);
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setIsLoginPage(false);
   };
 
   return (
     <div className="App">
-      <Navbar onLoginClick={handleLoginClick} isLoggedIn={isLoggedIn} />
-      {isLoggedIn ? (
-        <>
-          <Home />
-          <Shop />
-          <About />
-          <Contact />
-        </>
-      ) : showLoginForm ? (
+      {/* Inline Navbar */}
+      <nav className="navbar">
+        <div className="logo">
+          <img src={logo} alt="logo" />
+          <span>DripShip</span>
+        </div>
+        <ul className="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          {!isLoggedIn ? (
+            <li><button onClick={() => setIsLoginPage(true)} className="nav-button">Login</button></li>
+          ) : (
+            <li><button onClick={handleLogout} className="nav-button">Logout</button></li>
+          )}
+        </ul>
+      </nav>
+
+      {/* Main Area */}
+      {isLoginPage && !isLoggedIn ? (
         <Login
           username="admin"
-          password="1234"
+          password="password123"
           onLoginSuccess={handleLoginSuccess}
         />
       ) : (
-        <div className="landing-message">
-          <h2>Welcome to DripShip!</h2>
-          <p>Click Login to continue.</p>
+        <div className="home" id="home">
+          <h1>Welcome to DripShip!</h1>
+          {!isLoggedIn ? (
+            <p>Click Login to continue.</p>
+          ) : (
+            <ul>
+              <li>🔹 Explore products</li>
+              <li>🔹 Add items to your cart</li>
+              <li>🔹 Secure checkout available</li>
+            </ul>
+          )}
         </div>
       )}
+
+      <section id="shop">
+        <h2>Shop</h2>
+        <p>Our best-selling products will appear here.</p>
+      </section>
+
+      <section id="about">
+        <h2>About</h2>
+        <p>DripShip is a modern dropshipping platform for all your needs.</p>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>Email us at support@dripship.com</p>
+      </section>
     </div>
-  );
-}
-
-function Navbar({ onLoginClick }) {
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  return (
-    <nav className="navbar">
-      <div className="navbar-left">
-        <img src={logo} alt="DripShip Logo" className="navbar-logo" />
-        <span className="navbar-title">DripShip</span>
-      </div>
-      <div className="navbar-right">
-        <ul className="navbar-links">
-          <li onClick={() => scrollToSection('home')}>Home</li>
-          <li onClick={() => scrollToSection('shop')}>Shop</li>
-          <li onClick={() => scrollToSection('about')}>About</li>
-          <li onClick={() => scrollToSection('contact')}>Contact</li>
-          <li onClick={onLoginClick}>Login</li> {/* Now styled like others */}
-        </ul>
-      </div>
-    </nav>
-  );
-}
-
-function Home() {
-  return (
-    <section id="home" className="section">
-      <h2>Home Section</h2>
-      <p>Welcome to DripShip's homepage!</p>
-      <ul>
-        <li>High-quality dropshipping products</li>
-        <li>Fast and reliable shipping</li>
-        <li>24/7 customer support</li>
-        <li>Trusted by thousands of users</li>
-      </ul>
-    </section>
-  );
-}
-
-function Shop() {
-  return (
-    <section id="shop" className="section">
-      <h2>Shop Section</h2>
-      <p>Explore our exclusive dropshipping products.</p>
-    </section>
-  );
-}
-
-function About() {
-  return (
-    <section id="about" className="section">
-      <h2>About Us</h2>
-      <p>Learn more about DripShip's mission and team.</p>
-    </section>
-  );
-}
-
-function Contact() {
-  return (
-    <section id="contact" className="section">
-      <h2>Contact Us</h2>
-      <p>Feel free to reach out through our email or social media.</p>
-    </section>
   );
 }
 
