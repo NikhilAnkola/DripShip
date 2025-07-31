@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import logo from './logo.jpeg';
+import Login from './Login';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
     <div className="App">
-      <Navbar />
-      <Home />
-      <Shop />
-      <About />
-      <Contact />
+      {isLoggedIn ? (
+        <>
+          <Navbar />
+          <Home />
+          <Shop />
+          <About />
+          <Contact />
+        </>
+      ) : (
+        <Login
+          username="admin"
+          password="1234"
+          onLoginSuccess={handleLoginSuccess}
+        />
+      )}
     </div>
   );
 }
