@@ -18,9 +18,19 @@ function App() {
     setShowLoginForm(true);
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setShowLoginForm(false);
+  };
+
   return (
     <div className="App">
-      <Navbar onLoginClick={handleLoginClick} isLoggedIn={isLoggedIn} />
+      <Navbar
+        onLoginClick={handleLoginClick}
+        onLogoutClick={handleLogout}
+        isLoggedIn={isLoggedIn}
+      />
+
       {isLoggedIn ? (
         <>
           <Home />
@@ -44,7 +54,7 @@ function App() {
   );
 }
 
-function Navbar({ onLoginClick }) {
+function Navbar({ onLoginClick, onLogoutClick, isLoggedIn }) {
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -64,7 +74,11 @@ function Navbar({ onLoginClick }) {
           <li onClick={() => scrollToSection('shop')}>Shop</li>
           <li onClick={() => scrollToSection('about')}>About</li>
           <li onClick={() => scrollToSection('contact')}>Contact</li>
-          <li onClick={onLoginClick}>Login</li> {/* Now styled like others */}
+          {isLoggedIn ? (
+            <li onClick={onLogoutClick}>Logout</li>
+          ) : (
+            <li onClick={onLoginClick}>Login</li>
+          )}
         </ul>
       </div>
     </nav>
