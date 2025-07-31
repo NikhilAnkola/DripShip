@@ -70,9 +70,8 @@ html {
   font-size: 17.6px;
 }
 
-/* ✅ Updated bullet list styling */
 .section ul {
-  list-style-position: inside;  /* bring bullets closer to text */
+  list-style-position: inside;  
   padding-left: 0;
   margin-left: 0;
   text-align: left;
