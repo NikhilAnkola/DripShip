@@ -1,5 +1,5 @@
 html {
-  scroll-padding-top: 50px; /* match navbar height */
+  scroll-padding-top: 50px;
 }
 
 .App {
@@ -8,7 +8,7 @@ html {
 
 body {
   margin: 0;
-  padding-top: 80px; /* same as navbar height */
+  padding-top: 80px;
   font-family: Arial, sans-serif;
 }
 
@@ -17,15 +17,15 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px; /* or your preferred height */
-  background-color: gray; /* adjust as needed */
+  height: 80px;
+  background-color: gray;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 999; /* ensures it stays above other content */
+  z-index: 999;
 }
 
 .navbar-left {
