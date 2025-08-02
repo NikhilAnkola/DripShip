@@ -13,7 +13,6 @@ class Login extends React.Component {
       isLocked: false,
     };
 
-    // ✅ Simulated user database
     this.users = [
       { username: "Admin", password: "1234" },
       { username: "Nikhil", password: "3103" }
@@ -57,11 +56,11 @@ class Login extends React.Component {
         localStorage.removeItem("rememberedUser");
       }
 
-      this.setState({ loginAttempts: 0 }); // Reset attempts
-      alert(`Welcome ${username}`); // ✅ Feature 6: Personalized welcome popup
+      this.setState({ loginAttempts: 0 });
+      alert(`Welcome ${username}`);
 
       if (this.props.onLoginSuccess) {
-        this.props.onLoginSuccess(username); // optional
+        this.props.onLoginSuccess(username);
       }
     } else {
       const attempts = this.state.loginAttempts + 1;
