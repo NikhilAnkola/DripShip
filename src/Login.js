@@ -1,65 +1,140 @@
-import React from 'react';
-import './Login.css';
+import React from "react";
+import "./Login.css";
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      enteredUsername: '',
-      enteredPassword: '',
-      errorMessage: ''
+      username: localStorage.getItem("rememberedUser") || "",
+      password: "",
+      showPassword: false,
+      rememberMe: !!localStorage.getItem("rememberedUser"),
+      loginAttempts: 0,
+      isLocked: false,
     };
+
+    // ✅ Simulated user database
+    this.users = [
+      { username: "Admin", password: "1234" },
+      { username: "Nikhil", password: "3103" }
+    ];
   }
 
-  handleUsernameChange = (event) => {
-    this.setState({ enteredUsername: event.target.value });
+  handleInputChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
   };
 
-  handlePasswordChange = (event) => {
-    this.setState({ enteredPassword: event.target.value });
+  handleCheckboxChange = () => {
+    this.setState((prevState) => ({
+      rememberMe: !prevState.rememberMe,
+    }));
   };
 
-  handleSubmit = (event) => {
-  event.preventDefault();
-  const { username, password, onLoginSuccess } = this.props;
-  const { enteredUsername, enteredPassword } = this.state;
+  toggleShowPassword = () => {
+    this.setState((prevState) => ({
+      showPassword: !prevState.showPassword,
+    }));
+  };
 
-  if (
-    enteredUsername === username &&
-    enteredPassword === password
-  ) {
-    alert(`✅ Welcome ${enteredUsername}!`);
-    onLoginSuccess();
-    this.setState({ errorMessage: '' });
-  } else {
-    alert("❌ Invalid username or password");
-    this.setState({ errorMessage: '❌ Invalid username or password' });
-  }
-};
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (this.state.isLocked) {
+      alert("Too many failed attempts. Try again later.");
+      return;
+    }
+
+    const { username, password, rememberMe } = this.state;
+
+    const matchedUser = this.users.find(
+      (user) => user.username === username && user.password === password
+    );
+
+    if (matchedUser) {
+      if (rememberMe) {
+        localStorage.setItem("rememberedUser", username);
+      } else {
+        localStorage.removeItem("rememberedUser");
+      }
+
+      this.setState({ loginAttempts: 0 }); // Reset attempts
+      alert(`Welcome ${username}`); // ✅ Feature 6: Personalized welcome popup
+
+      if (this.props.onLoginSuccess) {
+        this.props.onLoginSuccess(username); // optional
+      }
+    } else {
+      const attempts = this.state.loginAttempts + 1;
+      this.setState({ loginAttempts: attempts });
+
+      if (attempts >= 3) {
+        this.setState({ isLocked: true });
+        alert("Account locked after 3 failed attempts.");
+      } else {
+        alert(`Incorrect credentials. Attempt ${attempts} of 3.`);
+      }
+    }
+  };
 
   render() {
+    const {
+      username,
+      password,
+      rememberMe,
+      showPassword,
+      isLocked,
+    } = this.state;
+
     return (
       <div className="login-container">
         <h2>Login</h2>
-        <form onSubmit={this.handleSubmit} className="login-form">
-          <input
-            type="text"
-            placeholder="Username"
-            value={this.state.enteredUsername}
-            onChange={this.handleUsernameChange}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={this.state.enteredPassword}
-            onChange={this.handlePasswordChange}
-            required
-          />
-          <button type="submit">Login</button>
-          {this.state.errorMessage && (
-            <p className="error-message">{this.state.errorMessage}</p>
-          )}
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={username}
+              onChange={this.handleInputChange}
+              disabled={isLocked}
+              required
+            />
+          </div>
+          <div>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={password}
+              onChange={this.handleInputChange}
+              disabled={isLocked}
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={this.handleCheckboxChange}
+              id="rememberMe"
+              disabled={isLocked}
+            />
+            <label htmlFor="rememberMe"> Remember Me</label>
+          </div>
+          <div>
+            <button
+              type="button"
+              onClick={this.toggleShowPassword}
+              disabled={isLocked}
+            >
+              {showPassword ? "Hide" : "Show"} Password
+            </button>
+          </div>
+          <div>
+            <button type="submit" disabled={isLocked}>
+              Login
+            </button>
+          </div>
         </form>
       </div>
     );
