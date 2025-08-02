@@ -1,4 +1,5 @@
 import React from "react";
+import users from './users.json';
 import "./Login.css";
 
 class Login extends React.Component {
@@ -13,10 +14,7 @@ class Login extends React.Component {
       isLocked: false,
     };
 
-    this.users = [
-      { username: "Admin", password: "1234" },
-      { username: "Nikhil", password: "3103" }
-    ];
+    this.users = users;
   }
 
   handleInputChange = (e) => {
