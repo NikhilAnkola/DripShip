@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import products from "./data";
 
 function Gallery() {
-  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [visibleDetails, setVisibleDetails] = useState({});
 
-  const handleToggleDetails = (id) => {
-    setSelectedProductId((prevId) => (prevId === id ? null : id));
+  const toggleDetails = (id) => {
+    setVisibleDetails((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   return (
@@ -15,12 +18,19 @@ function Gallery() {
           <img src={product.image} alt={product.name} style={styles.image} />
           <h3>{product.name}</h3>
           <p>{product.price}</p>
-          <button onClick={() => handleToggleDetails(product.id)}>
-            {selectedProductId === product.id ? "Hide Details" : "View Details"}
+          <button onClick={() => toggleDetails(product.id)}>
+            {visibleDetails[product.id] ? "Hide Details" : "View Details"}
           </button>
-          {selectedProductId === product.id && (
+
+          {/* Description wrapper with smooth collapse animation */}
+          <div
+            style={{
+              ...styles.descriptionWrapper,
+              maxHeight: visibleDetails[product.id] ? "150px" : "0",
+            }}
+          >
             <p style={styles.description}>{product.description}</p>
-          )}
+          </div>
         </div>
       ))}
     </div>
@@ -33,7 +43,7 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "center",
     gap: "20px",
-    padding: "20px"
+    padding: "20px",
   },
   card: {
     width: "250px",
@@ -41,17 +51,25 @@ const styles = {
     borderRadius: "8px",
     padding: "10px",
     textAlign: "center",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+    transition: "all 0.3s ease", // smooth resize
+    backgroundColor: "#fff",
   },
   image: {
     width: "100%",
+    height: "180px",
     objectFit: "cover",
-    borderRadius: "5px"
+    borderRadius: "5px",
+  },
+  descriptionWrapper: {
+    overflow: "hidden",
+    transition: "max-height 0.3s ease",
   },
   description: {
     marginTop: "10px",
-    color: "#333"
-  }
+    color: "#333",
+    fontSize: "14px",
+  },
 };
 
 export default Gallery;
