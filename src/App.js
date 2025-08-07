@@ -3,6 +3,7 @@ import './App.css';
 import './Login.css';
 import logo from './images/logo.jpeg';
 import Login from './Login';
+import Gallery from "./Gallery";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
