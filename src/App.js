@@ -103,6 +103,7 @@ function Shop() {
     <section id="shop" className="section">
       <h2>Shop Section</h2>
       <p>Explore our exclusive dropshipping products.</p>
+      <Gallery />
     </section>
   );
 }
