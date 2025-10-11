@@ -1,13 +1,25 @@
-import React, { useState } from "react";
-import products from "./data";
+import React, { useState, useEffect } from "react";
 
 function Gallery() {
+  // State to store products fetched from backend
+  const [products, setProducts] = useState([]);
+
+  // State to handle which product details are visible
   const [visibleDetails, setVisibleDetails] = useState({});
 
+  // Fetch products from backend API when component loads
+  useEffect(() => {
+    fetch("http://localhost:5000/api/products") // API endpoint from backend
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error("Error fetching products:", error));
+  }, []); // empty dependency array → runs only once on page load
+
+  // Toggle "View Details" visibility for each product
   const handleToggleDetails = (id) => {
     setVisibleDetails((prevState) => ({
       ...prevState,
-      [id]: !prevState[id] // Toggle visibility for this product
+      [id]: !prevState[id],
     }));
   };
 
@@ -21,6 +33,7 @@ function Gallery() {
           <button onClick={() => handleToggleDetails(product.id)}>
             {visibleDetails[product.id] ? "Hide Details" : "View Details"}
           </button>
+
           {visibleDetails[product.id] && (
             <p style={styles.description}>{product.description}</p>
           )}
@@ -36,7 +49,7 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "center",
     gap: "20px",
-    padding: "20px"
+    padding: "20px",
   },
   card: {
     width: "250px",
@@ -45,18 +58,19 @@ const styles = {
     padding: "10px",
     textAlign: "center",
     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    transition: "all 0.3s ease",
   },
   image: {
     width: "100%",
     objectFit: "cover",
-    borderRadius: "5px"
+    borderRadius: "5px",
   },
   description: {
     marginTop: "10px",
     color: "#333",
-    fontSize: "14px"
-  }
+    fontSize: "14px",
+  },
 };
 
 export default Gallery;
