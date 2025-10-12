@@ -11,7 +11,14 @@ function Gallery() {
   useEffect(() => {
     fetch("http://localhost:5000/api/products") // API endpoint from backend
       .then((response) => response.json())
-      .then((data) => setProducts(data))
+      .then((data) => {
+        // Map MongoDB _id to id
+        const productsWithId = data.map(product => ({
+          ...product,
+          id: product._id
+        }));
+        setProducts(productsWithId);
+      })
       .catch((error) => console.error("Error fetching products:", error));
   }, []); // empty dependency array → runs only once on page load
 
