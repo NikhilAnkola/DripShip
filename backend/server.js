@@ -4,6 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose'); // added for MongoDB connection
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
+app.use('/api/users', userRoutes);
 require('dotenv').config();
 
 const app = express();
