@@ -28,27 +28,27 @@ function Register({ onRegisterSuccess }) {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/register', {
+        const response = await fetch('http://localhost:5000/api/users/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
-      });
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (response.ok) {
-        alert('Registration successful!');
-        onRegisterSuccess(); // move to main page
-      } else {
-        alert(data.message || 'Registration failed. Try again.');
-      }
-    } catch (error) {
-      console.error('Error during registration:', error);
-      alert('Something went wrong. Check your backend.');
-    }
+        if (response.ok) {
+            alert('Registration successful!');
+            onRegisterSuccess(); // move to main page
+            } else {
+            alert(data.message || 'Registration failed. Try again.');
+            }
+        } catch (error) {
+            console.error('Error during registration:', error);
+            alert('Something went wrong. Check your backend.');
+        }
 
-    setIsSubmitting(false);
-  };
+        setIsSubmitting(false);
+    };
 
   return (
     <div className="register-container">

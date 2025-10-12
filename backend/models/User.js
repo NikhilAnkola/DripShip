@@ -3,11 +3,23 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     username: {
       type: String,
       required: true,
-      unique: true, // ensures no two users have the same username
+      unique: true,
       trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
     },
     password: {
       type: String,
@@ -15,7 +27,7 @@ const userSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // automatically adds createdAt and updatedAt
+    timestamps: true,
   }
 );
 
