@@ -58,10 +58,10 @@ class Login extends React.Component {
         }
 
         this.setState({ loginAttempts: 0 });
-        alert(`Welcome ${data.username}`);
+        alert(data.message); // <-- use backend message directly
 
         if (this.props.onLoginSuccess) {
-          this.props.onLoginSuccess(data.username);
+          this.props.onLoginSuccess(username); // keep the state username for frontend usage
         }
       } else {
         // Login failed (invalid credentials)
@@ -72,7 +72,7 @@ class Login extends React.Component {
           this.setState({ isLocked: true });
           alert("Account locked after 3 failed attempts.");
         } else {
-          alert(`Incorrect credentials. Attempt ${attempts} of 3.`);
+          alert(`${data.message}. Attempt ${attempts} of 3.`);
         }
       }
     } catch (err) {
