@@ -1,5 +1,4 @@
 import React from "react";
-import users from './users.json';
 import "./Login.css";
 
 class Login extends React.Component {
@@ -13,8 +12,6 @@ class Login extends React.Component {
       loginAttempts: 0,
       isLocked: false,
     };
-
-    this.users = users;
   }
 
   handleInputChange = (e) => {
@@ -33,7 +30,7 @@ class Login extends React.Component {
     }));
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
 
     if (this.state.isLocked) {
@@ -43,44 +40,49 @@ class Login extends React.Component {
 
     const { username, password, rememberMe } = this.state;
 
-    const matchedUser = this.users.find(
-      (user) => user.username === username && user.password === password
-    );
+    try {
+      const response = await fetch("http://localhost:5000/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
-    if (matchedUser) {
-      if (rememberMe) {
-        localStorage.setItem("rememberedUser", username);
+      const data = await response.json();
+
+      if (response.ok) {
+        // Login successful
+        if (rememberMe) {
+          localStorage.setItem("rememberedUser", username);
+        } else {
+          localStorage.removeItem("rememberedUser");
+        }
+
+        this.setState({ loginAttempts: 0 });
+        alert(`Welcome ${data.username}`);
+
+        if (this.props.onLoginSuccess) {
+          this.props.onLoginSuccess(data.username);
+        }
       } else {
-        localStorage.removeItem("rememberedUser");
-      }
+        // Login failed (invalid credentials)
+        const attempts = this.state.loginAttempts + 1;
+        this.setState({ loginAttempts: attempts });
 
-      this.setState({ loginAttempts: 0 });
-      alert(`Welcome ${username}`);
-
-      if (this.props.onLoginSuccess) {
-        this.props.onLoginSuccess(username);
+        if (attempts >= 3) {
+          this.setState({ isLocked: true });
+          alert("Account locked after 3 failed attempts.");
+        } else {
+          alert(`Incorrect credentials. Attempt ${attempts} of 3.`);
+        }
       }
-    } else {
-      const attempts = this.state.loginAttempts + 1;
-      this.setState({ loginAttempts: attempts });
-
-      if (attempts >= 3) {
-        this.setState({ isLocked: true });
-        alert("Account locked after 3 failed attempts.");
-      } else {
-        alert(`Incorrect credentials. Attempt ${attempts} of 3.`);
-      }
+    } catch (err) {
+      console.error("Login error:", err);
+      alert("Server error. Please try again later.");
     }
   };
 
   render() {
-    const {
-      username,
-      password,
-      rememberMe,
-      showPassword,
-      isLocked,
-    } = this.state;
+    const { username, password, rememberMe, showPassword, isLocked } = this.state;
 
     return (
       <div className="login-container">
@@ -119,11 +121,7 @@ class Login extends React.Component {
             <label htmlFor="rememberMe"> Remember Me</label>
           </div>
           <div>
-            <button
-              type="button"
-              onClick={this.toggleShowPassword}
-              disabled={isLocked}
-            >
+            <button type="button" onClick={this.toggleShowPassword} disabled={isLocked}>
               {showPassword ? "Hide" : "Show"} Password
             </button>
           </div>
