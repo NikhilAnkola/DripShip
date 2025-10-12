@@ -12,9 +12,9 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// ------------------------------
-// 🧠 MongoDB Connection (NEW)
-// ------------------------------
+
+// MongoDB Connection (NEW)
+
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/DripShip';
 
 mongoose.connect(MONGO_URI, {
@@ -27,21 +27,21 @@ mongoose.connect(MONGO_URI, {
   process.exit(1);
 });
 
-// ------------------------------
-// 🛍️ API Routes
-// ------------------------------
+
+// API Routes
+
 app.use('/api/products', productRoutes);
 
-// ------------------------------
-// ⚙️ Health Check Route
-// ------------------------------
+
+// Health Check Route
+
 app.get('/', (req, res) => {
   res.send({ status: 'ok', message: 'DripShip API running' });
 });
 
-// ------------------------------
-// 🚀 Start Server
-// ------------------------------
+
+// Start Server
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
