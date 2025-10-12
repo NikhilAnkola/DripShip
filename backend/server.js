@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose'); // added for MongoDB connection
 const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -31,7 +32,7 @@ mongoose.connect(MONGO_URI, {
 // API Routes
 
 app.use('/api/products', productRoutes);
-
+app.use('/api/users', userRoutes);
 
 // Health Check Route
 
