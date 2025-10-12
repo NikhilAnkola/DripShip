@@ -53,7 +53,7 @@ function App() {
       ) : showLoginForm ? (
         <Login onLoginSuccess={handleLoginSuccess} />
       ) : showRegisterForm ? (
-        <Register onRegisterSuccess={handleLoginSuccess} /> // 👈 Show register form
+        <Register onRegisterSuccess={handleLoginClick} /> // 👈 Show register form
       ) : (
         <div className="landing-message">
           <h2>Welcome to DripShip!</h2>
