@@ -37,11 +37,14 @@ function Register({ onRegisterSuccess }) {
         const data = await response.json();
 
         if (response.ok) {
-            alert('Registration successful!');
-            onRegisterSuccess(); // move to main page
-            } else {
-            alert(data.message || 'Registration failed. Try again.');
+            alert('Registration successful! Please log in.');
+            // Instead of going to main page, open login page
+            if (onRegisterSuccess) {
+                onRegisterSuccess(); // this should now open the login form in App.js
             }
+        } else {
+            alert(data.message || 'Registration failed. Try again.');
+        }
         } catch (error) {
             console.error('Error during registration:', error);
             alert('Something went wrong. Check your backend.');
