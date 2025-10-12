@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+const User = require('../models/User.js');
 
 // GET /api/users -> fetch all users (for testing purposes)
 router.get('/', async (req, res) => {
