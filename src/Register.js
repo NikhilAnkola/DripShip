@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css'; // reuse the same styles
+import './Register.css';
 
 function Register({ onRegisterSuccess }) {
   const [formData, setFormData] = useState({
@@ -9,6 +9,7 @@ function Register({ onRegisterSuccess }) {
     password: ''
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
@@ -18,12 +19,15 @@ function Register({ onRegisterSuccess }) {
     });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Backend endpoint (we'll build it later)
       const response = await fetch('http://localhost:5000/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -47,8 +51,8 @@ function Register({ onRegisterSuccess }) {
   };
 
   return (
-    <div className="login-container">
-      <h2>Register</h2>
+    <div className="register-container">
+      <h2>Create an Account</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -74,14 +78,24 @@ function Register({ onRegisterSuccess }) {
           onChange={handleChange}
           required
         />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
+        <div className="password-wrapper">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <button
+            type="button"
+            className="show-password-btn"
+            onClick={togglePasswordVisibility}
+          >
+            {showPassword ? 'Hide' : 'Show'}
+          </button>
+        </div>
+
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Registering...' : 'Register'}
         </button>
