@@ -1,4 +1,5 @@
 // backend/routes/userRoutes.js
+const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -52,6 +53,7 @@ router.post('/register', async (req, res) => {
 });
 
 // ✅ Step 3: Login existing user
+// POST /api/users/login -> login user with JWT
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
@@ -61,13 +63,20 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // compare hashed password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    res.json({ message: `Welcome ${username}` });
+    // ✅ Create JWT token
+    const token = jwt.sign(
+      { userId: user._id, username: user.username }, // payload
+      process.env.JWT_SECRET || 'supersecretkey',   // secret key
+      { expiresIn: '1h' }                           // token expiration
+    );
+
+    // send token to frontend along with username
+    res.json({ message: `Welcome ${user.username}`, token, username: user.username });
   } catch (error) {
     console.error('Login error:', error.message);
     res.status(500).json({ message: 'Server error during login' });

@@ -50,7 +50,12 @@ class Login extends React.Component {
       const data = await response.json();
 
       if (response.ok) {
-        // Login successful
+        // Save JWT token to localStorage
+        if (data.token) {
+          localStorage.setItem("jwtToken", data.token);
+        }
+
+        // Remember user if checkbox checked
         if (rememberMe) {
           localStorage.setItem("rememberedUser", username);
         } else {
@@ -58,13 +63,13 @@ class Login extends React.Component {
         }
 
         this.setState({ loginAttempts: 0 });
-        alert(data.message); // <-- use backend message directly
+        alert(data.message); // Backend message (e.g., "Welcome username!")
 
+        // Call parent callback to update login state
         if (this.props.onLoginSuccess) {
-          this.props.onLoginSuccess(username); // keep the state username for frontend usage
+          this.props.onLoginSuccess(username);
         }
       } else {
-        // Login failed (invalid credentials)
         const attempts = this.state.loginAttempts + 1;
         this.setState({ loginAttempts: attempts });
 
