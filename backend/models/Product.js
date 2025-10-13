@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
     price: {
-      type: String, // keeping as String since your JSON uses "₹5,000"
+      type: Number,
       required: true,
     },
     image: {

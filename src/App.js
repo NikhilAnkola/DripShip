@@ -4,56 +4,71 @@ import "./App.css";
 import "./Login.css";
 import logo from "./images/logo.jpeg";
 import Login from "./Login";
+import Register from "./Register";
 import Gallery from "./Gallery";
-import Register from "./Register"; // 👈 NEW import
+import Cart from "./Cart";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
-  const [showRegisterForm, setShowRegisterForm] = useState(false); // 👈 NEW state
+  const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const [showCart, setShowCart] = useState(false);
 
+  // Handlers
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
     setShowLoginForm(false);
     setShowRegisterForm(false);
+    setShowCart(false);
   };
 
   const handleLoginClick = () => {
     setShowLoginForm(true);
     setShowRegisterForm(false);
+    setShowCart(false);
   };
 
   const handleRegisterClick = () => {
     setShowRegisterForm(true);
     setShowLoginForm(false);
+    setShowCart(false);
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setShowLoginForm(false);
     setShowRegisterForm(false);
+    setShowCart(false);
+    localStorage.removeItem("jwtToken");
+  };
+
+  const handleCartClick = () => {
+    setShowCart((prev) => !prev); // toggle cart on/off
   };
 
   return (
     <div className="App">
       <Navbar
         onLoginClick={handleLoginClick}
-        onRegisterClick={handleRegisterClick} // 👈 Pass new handler
+        onRegisterClick={handleRegisterClick}
         onLogoutClick={handleLogout}
+        onCartClick={handleCartClick}
         isLoggedIn={isLoggedIn}
       />
 
+      {/* Main Content */}
       {isLoggedIn ? (
         <>
           <Home />
           <Shop />
           <About />
           <Contact />
+          {showCart && <Cart onClose={() => setShowCart(false)} />} {/* 👈 overlay cart */}
         </>
       ) : showLoginForm ? (
         <Login onLoginSuccess={handleLoginSuccess} />
       ) : showRegisterForm ? (
-        <Register onRegisterSuccess={handleLoginClick} /> // 👈 Show register form
+        <Register onRegisterSuccess={handleLoginClick} />
       ) : (
         <div className="landing-message">
           <h2>Welcome to DripShip!</h2>
@@ -64,7 +79,7 @@ function App() {
   );
 }
 
-function Navbar({ onLoginClick, onLogoutClick, onRegisterClick, isLoggedIn }) {
+function Navbar({ onLoginClick, onLogoutClick, onRegisterClick, onCartClick, isLoggedIn }) {
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) element.scrollIntoView({ behavior: "smooth" });
@@ -83,8 +98,9 @@ function Navbar({ onLoginClick, onLogoutClick, onRegisterClick, isLoggedIn }) {
           <li onClick={() => scrollToSection("about")}>About</li>
           <li onClick={() => scrollToSection("contact")}>Contact</li>
 
-          {/* 👇 New Register Button */}
           {!isLoggedIn && <li onClick={onRegisterClick}>Register</li>}
+
+          {isLoggedIn && <li onClick={onCartClick}>My Cart</li>}
 
           {isLoggedIn ? (
             <li onClick={onLogoutClick}>Logout</li>
@@ -97,7 +113,7 @@ function Navbar({ onLoginClick, onLogoutClick, onRegisterClick, isLoggedIn }) {
   );
 }
 
-// --- rest of your sections remain unchanged ---
+// --- Sections ---
 function Home() {
   return (
     <section id="home" className="section">
