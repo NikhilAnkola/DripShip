@@ -7,6 +7,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Gallery from "./Gallery";
 import Cart from "./Cart";
+import Home from "./Home";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -59,7 +60,7 @@ function App() {
       {/* Main Content */}
       {isLoggedIn ? (
         <>
-          <Home />
+          <Homes />
           <Shop />
           <About />
           <Contact />
@@ -114,17 +115,10 @@ function Navbar({ onLoginClick, onLogoutClick, onRegisterClick, onCartClick, isL
 }
 
 // --- Sections ---
-function Home() {
+function Homes() {
   return (
     <section id="home" className="section">
-      <h2>Home Section</h2>
-      <p>Welcome to DripShip's homepage!</p>
-      <ul>
-        <li>High-quality dropshipping products</li>
-        <li>Fast and reliable shipping</li>
-        <li>24/7 customer support</li>
-        <li>Trusted by thousands of users</li>
-      </ul>
+      <Home/>
     </section>
   );
 }
