@@ -89,7 +89,7 @@ function Cart({ onClose }) {
                   />
                   <div style={styles.info}>
                     <h3 style={styles.name}>{item.productId.name}</h3>
-                    <p style={styles.price}>${item.productId.price}</p>
+                    <p style={styles.price}>₹{item.productId.price}</p>
                     <button
                       style={styles.removeBtn}
                       onClick={() => handleRemove(item.productId._id)}
@@ -100,7 +100,7 @@ function Cart({ onClose }) {
                 </div>
               ))}
             </div>
-            <h3 style={styles.total}>Total: ${totalPrice}</h3>
+            <h3 style={styles.total}>Total: ₹{totalPrice}</h3>
           </>
         )}
       </div>

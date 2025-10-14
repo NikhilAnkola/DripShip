@@ -1,18 +1,13 @@
 // src/Gallery.js
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Gallery() {
-  // State to store all products fetched from backend
   const [products, setProducts] = useState([]);
-
-  // State to handle which product details are visible
   const [visibleDetails, setVisibleDetails] = useState({});
-
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 4; // Only show 4 products per page
+  const productsPerPage = 4;
 
-  // Fetch products from backend API when component loads
   useEffect(() => {
     fetch("http://localhost:5000/api/products")
       .then((response) => response.json())
@@ -26,7 +21,6 @@ function Gallery() {
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
-  // Toggle "View Details" visibility for each product
   const handleToggleDetails = (id) => {
     setVisibleDetails((prevState) => ({
       ...prevState,
@@ -34,7 +28,6 @@ function Gallery() {
     }));
   };
 
-  // -------- Add to Cart handler (frontend) ----------
   const handleAddToCart = async (productId) => {
     const token = localStorage.getItem("jwtToken");
     if (!token) {
@@ -57,7 +50,6 @@ function Gallery() {
       if (response.ok) {
         alert(data.message || "Product added to cart.");
       } else {
-        // backend might return messages like "Product already in cart"
         alert(data.message || "Could not add to cart. Try again.");
       }
     } catch (err) {
@@ -66,12 +58,11 @@ function Gallery() {
     }
   };
 
-  // Pagination Logic
+  // Pagination logic
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
-  // Handle Next/Previous
   const handleNext = () => {
     if (currentPage < Math.ceil(products.length / productsPerPage)) {
       setCurrentPage(currentPage + 1);
@@ -86,41 +77,68 @@ function Gallery() {
 
   return (
     <div style={styles.wrapper}>
-      <div style={styles.galleryContainer}>
-        {currentProducts.map((product) => (
-          <div key={product.id} style={styles.card}>
-            <img src={product.image} alt={product.name} style={styles.image} />
-            <h3>{product.name}</h3>
-            <p>{product.price}</p>
-
-            {/* ADD TO CART button (above View Details) */}
-            <button
-              style={styles.addToCartBtn}
-              onClick={() => handleAddToCart(product.id)}
+      {/* Animated gallery section */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentPage} // triggers reanimation when page changes
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              style={styles.galleryContainer}
             >
-              + Add to Cart
-            </button>
+              {currentProducts.map((product) => (
+                <div key={product.id} style={styles.card}>
+                  <img src={product.image} alt={product.name} style={styles.image} />
+                  <h3>{product.name}</h3>
+                  <p>₹{product.price}</p>
 
-            <button onClick={() => handleToggleDetails(product.id)}>
-              {visibleDetails[product.id] ? "Hide Details" : "View Details"}
-            </button>
+                  <button
+                    style={styles.addToCartBtn}
+                    onClick={() => handleAddToCart(product.id)}
+                  >
+                    + Add to Cart
+                  </button>
 
-            {visibleDetails[product.id] && (
-              <p style={styles.description}>{product.description}</p>
-            )}
-          </div>
-        ))}
-      </div>
+                  <button
+                    style={styles.detailBtn}
+                    onClick={() => handleToggleDetails(product.id)}
+                  >
+                    {visibleDetails[product.id] ? "Hide Details" : "View Details"}
+                  </button>
 
-      {/* Pagination Controls */}
+                  {visibleDetails[product.id] && (
+                    <p style={styles.description}>{product.description}</p>
+                  )}
+                </div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+      {/* Modern Pagination Controls */}
       <div style={styles.pagination}>
-        <button onClick={handlePrevious} disabled={currentPage === 1}>
+        <button
+          style={{
+            ...styles.pageButton,
+            ...(currentPage === 1 ? styles.disabledButton : {}),
+          }}
+          onClick={handlePrevious}
+          disabled={currentPage === 1}
+        >
           ◀ Previous
         </button>
+
         <span style={styles.pageInfo}>
           Page {currentPage} of {Math.ceil(products.length / productsPerPage)}
         </span>
+
         <button
+          style={{
+            ...styles.pageButton,
+            ...(currentPage === Math.ceil(products.length / productsPerPage)
+              ? styles.disabledButton
+              : {}),
+          }}
           onClick={handleNext}
           disabled={currentPage === Math.ceil(products.length / productsPerPage)}
         >
@@ -147,17 +165,17 @@ const styles = {
   card: {
     width: "250px",
     border: "1px solid #ccc",
-    borderRadius: "8px",
-    padding: "10px",
+    borderRadius: "10px",
+    padding: "15px",
     textAlign: "center",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.15)",
     backgroundColor: "#fff",
     transition: "all 0.3s ease",
   },
   image: {
     width: "100%",
     objectFit: "cover",
-    borderRadius: "5px",
+    borderRadius: "8px",
   },
   description: {
     marginTop: "10px",
@@ -168,23 +186,53 @@ const styles = {
     display: "block",
     width: "100%",
     margin: "10px 0",
-    padding: "8px 10px",
+    padding: "10px 12px",
     borderRadius: "6px",
     border: "none",
-    backgroundColor: "#000000ff",
+    backgroundColor: "#000",
     color: "white",
     cursor: "pointer",
     fontWeight: "600",
+    transition: "all 0.3s ease",
+  },
+  detailBtn: {
+    display: "block",
+    width: "100%",
+    margin: "5px 0",
+    padding: "8px 10px",
+    borderRadius: "6px",
+    border: "1px solid #555",
+    backgroundColor: "#fff",
+    cursor: "pointer",
+    transition: "0.3s",
   },
   pagination: {
-    marginTop: "20px",
+    marginTop: "25px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    gap: "15px",
+    gap: "20px",
   },
   pageInfo: {
     fontWeight: "bold",
+    fontSize: "16px",
+  },
+  pageButton: {
+    padding: "10px 18px",
+    border: "none",
+    borderRadius: "25px",
+    backgroundColor: "#111",
+    color: "white",
+    fontWeight: "600",
+    cursor: "pointer",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+    transition: "all 0.3s ease",
+  },
+  disabledButton: {
+    backgroundColor: "#777",
+    cursor: "not-allowed",
+    boxShadow: "none",
+    opacity: 0.6,
   },
 };
 
