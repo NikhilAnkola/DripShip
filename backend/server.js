@@ -1,4 +1,3 @@
-// backend/server.js
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -28,7 +27,7 @@ mongoose.connect(MONGO_URI, {
 
 // API Routes
 app.use('/api/products', productRoutes);
-app.use('/api/users', userRoutes); // <-- move here
+app.use('/api/users', userRoutes); 
 app.use("/api/cart", cartRoutes);
 
 // Health Check
