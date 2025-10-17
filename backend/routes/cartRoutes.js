@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const Product = require("../models/Product");
-const verifyToken = require("../middleware/verifyToken"); // assumes you already use JWT auth
+const verifyToken = require("../middleware/verifyToken"); 
 
-// 🟢 Add item to cart
+//  Add item to cart
 router.post("/add", verifyToken, async (req, res) => {
   try {
     const userId = req.user.id;
@@ -32,7 +32,7 @@ router.post("/add", verifyToken, async (req, res) => {
   }
 });
 
-// 🟣 Get all cart items
+//  Get all cart items
 router.get("/", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).populate("cart.productId");
@@ -43,7 +43,7 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
-// 🔴 Remove item from cart
+//  Remove item from cart
 router.delete("/remove/:productId", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);

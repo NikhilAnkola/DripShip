@@ -1,10 +1,9 @@
-// routes/productRoutes.js
 const express = require("express");
 const Product = require("../models/Product.js");
 
 const router = express.Router();
 
-// ✅ GET /api/products — fetch all products from MongoDB
+//  GET /api/products — fetch all products from MongoDB
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find(); // fetch all docs
@@ -15,7 +14,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ GET /api/products/:id — fetch a single product by its MongoDB _id
+//  GET /api/products/:id — fetch a single product by its MongoDB _id
 router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
