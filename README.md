@@ -135,10 +135,11 @@ DripShip/
 ## Screenshots
 ### Landing Page
 Welcome page before login/register
-![Landing Page](../screenshots/landingPage.png)
+![Landing Page](screenshots/landingPage.png)
 
 ### Registration Page
-- User registration form with password visibility toggle
+User registration form with password visibility toggle
+![Registration Page](screenshots/registrationPage.png)
 
 ### Login Page
 - JWT login system with Remember Me and login attempt limiter
