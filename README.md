@@ -130,3 +130,31 @@ DripShip/
 └── README.md
 ```
 
+--- 
+
+## Screenshots
+### Landing Page
+- Welcome page before login/register
+- (../screenshots/landingPage.png)
+
+### Registration Page
+- User registration form with password visibility toggle
+
+### Login Page
+- JWT login system with Remember Me and login attempt limiter
+
+### Home Page
+- Hero section with animated feature cards
+
+### Product Gallery
+- Product listing with Add to Cart, View Details, and Pagination
+
+### Cart Popup
+- Dynamic cart overlay with total price and remove option
+
+### MongoDB Collections
+- Users Collection
+- Products Collection
+- Cart stored inside User document
+
+---
