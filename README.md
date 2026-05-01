@@ -160,7 +160,9 @@ Welcome page before login/register
 ---
 
 ## MongoDB Database Design
+
 ### User Schema
+```javascript
 {
   name,
   username,
@@ -172,63 +174,74 @@ Welcome page before login/register
     }
   ]
 }
+```
 
 ### Product Schema
+```javascript
 {
   name,
   price,
   image,
   description
 }
+```
 
 --- 
 
 ## Installation & Setup
+
 ### Step 1: Clone the Repository
-git clone https://github.com/your-username/DripShip.git
-cd DripShip
+- git clone https://github.com/NikhilAnkola/DripShip.git
+- cd DripShip
+
 ### Step 2: Install Frontend Dependencies
-npm install
+- npm install
+
 ### Step 3: Install Backend Dependencies
-cd backend
-npm install
+- cd backend
+- npm install
+
 ### Step 4: Create .env File
 
 Inside the backend folder, create a .env file:
 
-JWT_SECRET=your_secret_key
-MONGO_URI=mongodb://localhost:27017/DripShip
+- JWT_SECRET=your_secret_key
+- MONGO_URI=mongodb://localhost:27017/DripShip
+
 ### Step 5: Start Frontend
-npm start
+- npm start
 
 Frontend runs on:
+- http://localhost:3000
 
-http://localhost:3000
 ### Step 6: Start Backend
 
 Open a new terminal:
 
-cd backend
-node server.js
+- cd backend
+- node server.js
 
 Backend runs on:
 
-http://localhost:5000
+- http://localhost:5000
 
 ---
 
 ## API Routes
+
 ### User Routes
-POST   /api/users/register
-POST   /api/users/login
-GET    /api/users
+- POST   /api/users/register
+- POST   /api/users/login
+- GET    /api/users
+
 ### Product Routes
-GET    /api/products
-GET    /api/products/:id
+- GET    /api/products
+- GET    /api/products/:id
+
 ### Cart Routes
-POST   /api/cart/add
-GET    /api/cart
-DELETE /api/cart/remove/:
+- POST   /api/cart/add
+- GET    /api/cart
+- DELETE /api/cart/remove/:
 
 ---
 
@@ -249,6 +262,8 @@ Currently the project does NOT include:
 - Checkout System
 
 The project currently functions as a strong MERN e-commerce foundation rather than a complete production-ready dropshipping platform.
+
+---
 
 ## Future Improvements
 
