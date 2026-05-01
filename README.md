@@ -143,6 +143,7 @@ User registration form with password visibility toggle
 
 ### Login Page
 - JWT login system with Remember Me and login attempt limiter
+- ![Login Page](screenshots/loginPage.png)
 
 ### Home Page
 - Hero section with animated feature cards
