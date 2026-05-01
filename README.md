@@ -142,22 +142,30 @@ User registration form with password visibility toggle
 ![Registration Page](screenshots/registrationPage.png)
 
 ### Login Page
-- JWT login system with Remember Me and login attempt limiter
-    ![Login Page](screenshots/loginPage.png)
+JWT login system with Remember Me and login attempt limiter
+![Login Page](screenshots/loginPage.png)
 
 ### Home Page
-- Hero section with animated feature cards
+Hero section with animated feature cards
+![Home Page](screenshots/homePage.png)
 
 ### Product Gallery
-- Product listing with Add to Cart, View Details, and Pagination
+Product listing with Add to Cart, View Details, and Pagination
+![Product Gallery](screenshots/productGallery.png)
 
 ### Cart Popup
-- Dynamic cart overlay with total price and remove option
+Dynamic cart overlay with total price and remove option
+![Cart Popup](screenshots/cartPopup.png)
 
 ### MongoDB Collections
 - Users Collection
-- Products Collection
+    ![MongoDB Users](screenshots/mongodb-userCollection.png)
+
+- Products 
+    ![MongoDB Products](screenshots/mongodb-productsCollection.png)
+
 - Cart stored inside User document
+    ![MongoDB Cart Items](screenshots/mongodb-cartItems.png)
 
 ---
 
