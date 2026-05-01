@@ -1,10 +1,12 @@
 # DripShip
 
-A MERN Stack based e-commerce project inspired by the dropshipping business model, built using MongoDB, Express.js, React.js, and Node.js.
+DripShip is a MERN Stack based e-commerce web application built using MongoDB, Express.js, React.js, and Node.js.
 
-Although the original goal was to build a complete dropshipping platform with advanced supplier-side workflow, due to project timeline constraints, the current implementation focuses on the core e-commerce functionalities such as authentication, product browsing, cart management, and protected user actions.
+The project focuses on core online shopping functionalities such as user authentication, product browsing, cart management, protected user actions, and MongoDB-based product storage.
 
-This project was developed as a solo academic micro-project to demonstrate full-stack MERN development concepts including frontend-backend integration, JWT authentication, MongoDB data handling, and responsive UI design.
+It was developed as a solo academic micro-project to demonstrate full-stack MERN development concepts including frontend-backend integration, REST API development, JWT authentication, secure password handling, and responsive UI design.
+
+The name "DripShip" represents the concept of a modern online shopping platform with scalable e-commerce architecture and smooth user experience..
 
 ---
 
@@ -24,7 +26,7 @@ DripShip allows users to:
 - Experience login attempt limiting after multiple failed attempts
 - Navigate through animated product gallery with pagination
 
-The project simulates the foundation of a dropshipping/e-commerce platform where users can browse and manage products before future expansion into supplier integration, payment systems, and order management.
+The project provides a strong foundation for a scalable e-commerce platform where users can securely browse products, manage carts, and interact with a full-stack shopping system built on MERN architecture.
 
 ---
 
@@ -277,21 +279,19 @@ DELETE /api/cart/remove/:
 
 ## Current Limitations
 
-This is important for honesty and realistic project presentation.
-
-Currently the project does NOT include:
+The current version focuses on core e-commerce functionality and does not yet include advanced production-level features such as:
 
 - Payment Gateway Integration
 - Admin Dashboard
 - Order Tracking
-- Supplier Integration
-- Inventory Sync
-- Automated Dropshipping Workflow
-- Wishlist Backend Logic
 - Product Quantity Management
 - Checkout System
+- Wishlist Backend Logic
+- Product Search & Filters
+- Inventory Management
+- Full Production Deployment
 
-The project currently functions as a strong MERN e-commerce foundation rather than a complete production-ready dropshipping platform.
+This project is designed as a strong MERN full-stack academic project and serves as a solid foundation for future feature expansion.
 
 ---
 
@@ -343,6 +343,8 @@ GitHub: https://github.com/NikhilAnkola
 
 ## Final Note
 
-DripShip started as a complete dropshipping platform idea, but due to time constraints, it evolved into a fully functional MERN-based e-commerce system with authentication and cart management.
+DripShip is designed as a practical MERN Stack e-commerce project that demonstrates real-world full-stack development concepts including authentication, protected routes, MongoDB integration, cart management, and responsive frontend design.
 
-Rather than pretending unfinished features exist, this project honestly represents a strong practical implementation of full-stack development fundamentals and serves as a solid base for future expansion.
+Rather than overcomplicating the system with unnecessary features, the project focuses on building strong core functionality with clean backend architecture and user-friendly frontend interaction.
+
+It serves as a solid demonstration of full-stack development skills and provides a strong base for future enhancements such as payments, admin controls, and advanced e-commerce workflows.
