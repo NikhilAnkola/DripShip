@@ -135,7 +135,7 @@ DripShip/
 ## Screenshots
 ### Landing Page
 Welcome page before login/register
-![Alt text](../screenshots/landingPage.png)
+![Landing Page](../screenshots/landingPage.png)
 
 ### Registration Page
 - User registration form with password visibility toggle
