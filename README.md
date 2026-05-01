@@ -118,15 +118,21 @@ DripShip/
 │
 ├── public/
 │
+├── screenshots/
+│
 ├── src/
 │   ├── images/
+│   ├── App.css
 │   ├── App.js
 │   ├── Cart.js
 │   ├── Gallery.js
 │   ├── Home.js
+│   ├── index.css
+│   ├── index.js
+│   ├── Login.css
 │   ├── Login.js
-│   ├── Register.js
-│   └── index.js
+│   ├── Register.css
+│   └── Register.js
 │
 ├── package.json
 └── README.md
@@ -163,10 +169,10 @@ Dynamic cart overlay with total price and remove option
 - Users Collection
     ![MongoDB Users](screenshots/mongodb-userCollection.png)
 
-- Products 
+- Products Collection
     ![MongoDB Products](screenshots/mongodb-productsCollection.png)
 
-- Cart stored inside User document
+- Cart items stored inside User document
     ![MongoDB Cart Items](screenshots/mongodb-cartItems.png)
 
 ---
